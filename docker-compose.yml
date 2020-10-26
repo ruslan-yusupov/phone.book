@@ -3,9 +3,9 @@ version: '3.8'
 services:
     nginx:
         build:
-            context: phone.book
+            context: .
             target: nginx
-        container_name: nginx-container
+        container_name: nginx-${PROJECT_NAME}-container
         ports:
             - '80:80'
         volumes:
@@ -18,11 +18,11 @@ services:
 
     php:
         build:
-            context: phone.book
+            context: .
             target: php
             args:
                 USER_UID: ${USER_UID}
-        container_name: php-container
+        container_name: php-${PROJECT_NAME}-container
         volumes:
             - ./:/home/www-data/phone.book
         networks:
@@ -32,9 +32,9 @@ services:
 
     mysql:
         build:
-            context: phone.book
+            context: .
             target: mysql
-        container_name: mysql-container
+        container_name: mysql-${PROJECT_NAME}-container
         restart: always
         ports:
             - '3306:3306'

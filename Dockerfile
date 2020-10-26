@@ -54,7 +54,7 @@ RUN deluser www-data \
 
 COPY composer.* ./
 
-RUN chown -R www-data:www-data ./
+RUN chown -R www-data:www-data ../
 
 USER www-data
 
