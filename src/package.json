@@ -1,0 +1,33 @@
+{
+  "name": "phone.book",
+  "version": "1.0.0",
+  "description": "phone.book",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ruslan-yusupov/phone.book"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
+  "dependencies": {
+    "autoprefixer": "^9.7.3",
+    "bootstrap": "^4.4.1",
+    "css-loader": "^3.4.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.1.2"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.15",
+    "mini-css-extract-plugin": "^0.9.0",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production webpack --config webpack.config.js",
+    "webpack": "NODE_ENV=development webpack --config webpack.config.js --watch"
+  }
+}
