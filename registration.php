@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/autoload.php';
+
+use App\User;
 
 $login    = $_POST['login'];
 $email    = $_POST['email'];
@@ -15,7 +17,7 @@ switch (true) {
         die;
 }
 
-register($login, $email, $password);
+User::register($login, $email, $password);
 
 header('Location: /');
 die;

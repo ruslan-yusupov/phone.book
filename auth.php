@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/autoload.php';
+
+use App\User;
 
 $email    = $_POST['email'];
 $password = $_POST['password'];
@@ -12,7 +14,7 @@ switch (true) {
         die;
 }
 
-$userId = authenticate($email, $password);
+$userId = User::authenticate($email, $password);
 
 if (false === $userId) {
     header('Location: /');
@@ -21,8 +23,8 @@ if (false === $userId) {
 
 $userSessionId = hash('gost-crypto', microtime(true) . uniqid());
 
-setcookie(COOKIE_SESS_NAME, $userSessionId);
-setUserSession($userId, $userSessionId);
+setcookie(User::COOKIE_SESS_NAME, $userSessionId);
+User::setSession($userId, $userSessionId);
 
 header('Location: /');
 die;

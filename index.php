@@ -2,12 +2,13 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/autoload.php';
-require_once __DIR__ . '/functions.php';
+
+use App\User;
 
 
 $routes = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 
-$user = getCurrentUser();
+$user = User::getCurrentUser();
 ?>
 <!doctype html>
 <html lang="en">
