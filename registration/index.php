@@ -1,13 +1,11 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/autoload.php';
-require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../autoload.php';
+require_once __DIR__ . '/../functions.php';
 
 
 $routes = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-
-$user = getCurrentUser();
 ?>
 <!doctype html>
 <html lang="en">
@@ -23,13 +21,24 @@ $user = getCurrentUser();
 
 <form class="form-signin"
       method="post"
-      action="/auth.php">
+      action="/registration.php">
     <img class="mb-4 logo"
          src="/src/app/img/logo/logo.png"
          alt="logo">
     <h1 class="h3 mb-3 font-weight-normal">
-        Авторизация
+        Регистрация
     </h1>
+    <label for="inputLogin"
+           class="sr-only">
+        Логин
+    </label>
+    <input type="text"
+           id="inputLogin"
+           class="form-control"
+           name="login"
+           placeholder="Логин"
+           required=""
+           autofocus="">
     <label for="inputEmail"
            class="sr-only">
         Email
@@ -51,33 +60,27 @@ $user = getCurrentUser();
            class="form-control"
            placeholder="Пароль"
            required="">
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox"
-                   value="remember-me">&nbsp;Запомнить меня
-        </label>
-    </div>
+    <label for="inputConfirmPassword"
+           class="sr-only">
+        Подтвердите пароль
+    </label>
+    <input type="password"
+           id="inputConfirmPassword"
+           name="confirm_password"
+           class="form-control"
+           placeholder="Подтвердите пароль"
+           required="">
     <button class="btn btn-lg btn-primary"
             type="submit">
-        Войти
-    </button>
-    <a href="/registration/" class="btn btn-lg btn-secondary">
         Зарегистрироваться
+    </button>
+    <a href="/" class="btn btn-lg btn-secondary">
+        Войти
     </a>
     <p class="mt-5 mb-3 text-muted">
         © <?php echo date('Y'); ?>
     </p>
 </form>
-
-<?php
-
-if (!empty($user)) { ?>
-
-    <form action="/logout.php" method="post">
-        <button type="submit">Выйти</button>
-    </form>
-
-<?php } ?>
 
 <script src="/src/dist/bundle.js"></script>
 </body>
