@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/autoload.php';
 
-use App\User;
+use App\Models\User;
 
 $email    = $_POST['email'];
 $password = $_POST['password'];

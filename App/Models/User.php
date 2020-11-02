@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App;
+namespace App\Models;
 
 use PDO;
 
@@ -21,7 +21,7 @@ class User
      */
     public static function authenticate(string $email, string $password)
     {
-        $dbh = new PDO(self::DSN, self::DB_USER, self::DB_PASSWORD);
+        $dbh = new PDO(self::DSN, self::DB_USER, self::DB_PASSWORD); //TODO via Db class
         $sth = $dbh->prepare('SELECT * FROM users WHERE email=:email');
 
         $sth->execute([':email' => $email]);

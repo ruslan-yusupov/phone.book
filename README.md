@@ -6,7 +6,7 @@ docker-compose up -d --build
 
 docker-compose exec php composer install
 
-docker-compose exec php bash -c "cd src/ && npm install"
+docker-compose exec php bash -c "cd src/ && npm install && npm run build"
 
 ```
 
