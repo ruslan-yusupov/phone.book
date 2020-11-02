@@ -4,9 +4,9 @@ require_once __DIR__ . '/autoload.php';
 
 use App\Models\User;
 
-$login    = $_POST['login'];
-$email    = $_POST['email'];
-$password = $_POST['password'];
+$login           = $_POST['login'];
+$email           = $_POST['email'];
+$password        = $_POST['password'];
 $confirmPassword = $_POST['confirm_password'];
 
 switch (true) {

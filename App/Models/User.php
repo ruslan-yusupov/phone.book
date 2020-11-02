@@ -3,16 +3,19 @@
 
 namespace App\Models;
 
-use PDO;
+use App\Db;
+use App\Model;
 
-class User
+class User extends Model
 {
 
     const COOKIE_SESS_NAME = 'APPSESSID';
-    const DB_USER          = 'user';
-    const DB_PASSWORD      = 'K6&3Y%qb%WS(cl21';
-    const DSN              = 'mysql:host=172.22.0.5;dbname=phone_book';
 
+    public static string $table = 'users';
+
+    public string $login;
+    public string $email;
+    public $password;
 
     /**
      * @param string $email
@@ -21,16 +24,16 @@ class User
      */
     public static function authenticate(string $email, string $password)
     {
-        $dbh = new PDO(self::DSN, self::DB_USER, self::DB_PASSWORD); //TODO via Db class
-        $sth = $dbh->prepare('SELECT * FROM users WHERE email=:email');
+        $db     = new Db;
+        $sql    = 'SELECT * FROM ' . self::$table . ' WHERE email=:email';
+        $params = [':email' => $email];
+        $result = $db->query($sql, $params, self::class);
+        $user   = reset($result);
 
-        $sth->execute([':email' => $email]);
 
-        $data = $sth->fetch();
-
-        if (!empty($data)) {
-            if (true === password_verify($password, $data['password'])) {
-                return $data['id'];
+        if (!empty($user)) {
+            if (true === password_verify($password, $user->password)) {
+                return $user->id;
             }
         }
 
@@ -40,61 +43,25 @@ class User
 
 
     /**
-     * @param int $userId
-     * @param string $hash
-     * @return bool
-     */
-    public static function setSession(int $userId, string $hash): bool
-    {
-
-        $dbh = new PDO(self::DSN, self::DB_USER, self::DB_PASSWORD);
-
-        //Clean old sessions
-        $sth = $dbh->prepare(
-            'DELETE FROM sessions WHERE user_id=:user_id'
-        );
-        $sth->execute([':user_id' => $userId]);
-
-        //Add new session
-        $sth = $dbh->prepare(
-            'INSERT INTO sessions (user_id, hash, user_agent) VALUES (:user_id, :hash, :user_agent)'
-        );
-
-        return $sth->execute([':user_id' => $userId, ':hash' => $hash, ':user_agent' => $_SERVER['HTTP_USER_AGENT']]);
-
-    }
-
-
-    /**
      * @return mixed|null
      */
     public static function getCurrentUser()
     {
-        $dbh = new PDO(self::DSN, self::DB_USER, self::DB_PASSWORD);
         $userSessionHash = $_COOKIE[self::COOKIE_SESS_NAME] ?? null;
 
         if (empty($userSessionHash)) {
             return null;
         }
 
-        $sth = $dbh->prepare(
-            'SELECT user_id FROM sessions WHERE hash=:hash AND user_agent=:user_agent'
-        );
-        $sth->execute([':hash' => $userSessionHash, ':user_agent' => $_SERVER['HTTP_USER_AGENT']]);
+        //Get user id from session
+        $userId = Session::getUserId($userSessionHash);
 
-        $sessionInfo = $sth->fetch();
-
-        if (empty($sessionInfo)) {
+        if (empty($userId)) {
             return null;
         }
 
-        $sth = $dbh->prepare(
-            'SELECT * FROM users WHERE id=:id'
-        );
-
-        $sth->execute([':id' => $sessionInfo['user_id']]);
-
-        return $sth->fetch(PDO::FETCH_ASSOC);
+        //Get user
+        return self::findById($userId);
 
     }
 
@@ -110,12 +77,8 @@ class User
             return false;
         }
 
-        $dbh = new PDO(self::DSN, self::DB_USER, self::DB_PASSWORD);
-        $sth = $dbh->prepare(
-            'DELETE FROM sessions WHERE user_id=:user_id'
-        );
-
-        $result = $sth->execute([':user_id' => $user['id']]);
+        //Delete user sessions
+        $result = Session::deleteAllByUserId($user->id);
 
         if (true === $result) {
             setcookie(self::COOKIE_SESS_NAME, '', time() - 3600);
@@ -136,12 +99,13 @@ class User
     {
         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-        $dbh = new PDO(self::DSN, self::DB_USER, self::DB_PASSWORD);
-        $sth = $dbh->prepare(
-            'INSERT INTO users (login, email, password) VALUES (:login, :email, :password)'
-        );
+        $user = new self;
+        $user->login = $login;
+        $user->email = $email;
+        $user->password = $passwordHash;
+        $user->save();
 
-        return $sth->execute([':login' => $login, ':email' => $email, ':password' => $passwordHash]);
+        return $user->id;
 
     }
 

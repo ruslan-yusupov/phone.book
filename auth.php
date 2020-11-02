@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/autoload.php';
 
+use App\Models\Session;
 use App\Models\User;
 
 $email    = $_POST['email'];
@@ -24,7 +25,9 @@ if (false === $userId) {
 $userSessionId = hash('gost-crypto', microtime(true) . uniqid());
 
 setcookie(User::COOKIE_SESS_NAME, $userSessionId);
-User::setSession($userId, $userSessionId);
+
+Session::deleteAllByUserId($userId);
+Session::add($userId, $userSessionId);
 
 header('Location: /');
 die;
