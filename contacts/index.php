@@ -4,7 +4,10 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../autoload.php';
 
 use App\Models\Contact;
+use App\View;
 
-$contacts = Contact::findAll();
+$view = new View();
+$view->contacts = Contact::findAll();
 
-dump($contacts);
+$content = $view->render(__DIR__ . '/../App/Templates/contacts/list.php');
+echo $content;
