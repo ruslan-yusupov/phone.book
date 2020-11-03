@@ -4,9 +4,17 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/autoload.php';
 
 use App\Models\User;
+use App\Router;
 
 
 $routes = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+
+$rules = [
+        'contacts' => '/contacts/index.php'
+];
+
+//$router = new Router($rules, $_SERVER['REQUEST_URI']);
+//$router->run();
 
 $user = User::getCurrentUser();
 ?>
