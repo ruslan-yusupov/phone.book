@@ -35,8 +35,10 @@ class View
 
     public function render($template)
     {
+        $templatePath = __DIR__ . '/../templates' . $template;
+
         ob_start();
-        include $template;
+        include $templatePath;
         $content = ob_get_contents();
         ob_end_clean();
 

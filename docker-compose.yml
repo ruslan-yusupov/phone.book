@@ -11,8 +11,6 @@ services:
         volumes:
             - ./:/home/www-data/phone.book
             - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
-        networks:
-            - phone-book-network
         depends_on:
             - php
 
@@ -25,8 +23,6 @@ services:
         container_name: php-${PROJECT_NAME}-container
         volumes:
             - ./:/home/www-data/phone.book
-        networks:
-            - phone-book-network
         depends_on:
             - mysql
 
@@ -45,16 +41,3 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-        networks:
-            phone-book-network:
-                ipv4_address: ${MYSQL_IPV4_ADDRESS}
-                aliases:
-                    - mysql
-
-networks:
-    phone-book-network:
-        driver: bridge
-        ipam:
-            driver: default
-            config:
-                - subnet: 172.22.0.0/16

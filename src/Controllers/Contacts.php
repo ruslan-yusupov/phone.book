@@ -14,33 +14,33 @@ class Contacts extends Controller
         return !empty(User::getCurrentUser());
     }
 
-    public function actionDefault()
+    public function index()
     {
         $this->view->contacts = Contact::findAll();
         $this->view->user     = User::getCurrentUser();
 
-        echo $this->view->render(__DIR__ . '/../Templates/contacts/list.php');
+        echo $this->view->render('/contacts/list.php');
 
     }
 
-    public function actionDetail()
+    public function detail()
     {
 
         $id = 1;
 
         $this->view->contacts = Contact::findById($id);
-        echo $this->view->render(__DIR__ . '/../Templates/contacts/list.php');
+        echo $this->view->render('/contacts/list.php');
 
     }
 
-    public function actionNew()
+    public function new()
     {
 
-        echo $this->view->render(__DIR__ . '/../Templates/contacts/add.php');
+        echo $this->view->render('/contacts/add.php');
 
     }
 
-    public function actionAdd()
+    public function add()
     {
 
         switch (true) {
@@ -49,7 +49,7 @@ class Contacts extends Controller
             case empty($_POST['phone_number']):
             case empty($_POST['email']):
             case empty($_POST['picture']):
-                include __DIR__ . '/../Templates/contacts/add.php';
+                echo $this->view->render('/contacts/add.php');
                 die;
         }
 
@@ -68,7 +68,7 @@ class Contacts extends Controller
 
     }
 
-    public function actionUpdate()
+    public function update()
     {
 
         if (empty($_GET['id'])) {
@@ -94,11 +94,11 @@ class Contacts extends Controller
 
         $contact->save();
 
-        include __DIR__ . '/../Templates/contacts/update.php';
+        echo $this->view->render('/contacts/update.php');
 
     }
 
-    public function actionDelete()
+    public function delete()
     {
 
         if (empty($_GET['id'])) {

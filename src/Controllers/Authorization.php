@@ -10,15 +10,15 @@ class Authorization extends Controller
 {
 
 
-    public function actionDefault()
+    public function index()
     {
 
-        echo $this->view->render(__DIR__ . '/../Templates/user/auth.php');
+        echo $this->view->render('/user/auth.php');
 
     }
 
 
-    public function actionAuth()
+    public function auth()
     {
         $email    = strval(htmlspecialchars($_POST['email']));
         $password = strval(htmlspecialchars($_POST['password']));
@@ -49,7 +49,7 @@ class Authorization extends Controller
     }
 
 
-    public function actionLogout()
+    public function logout()
     {
         User::logout();
 

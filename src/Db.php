@@ -16,7 +16,7 @@ class Db
     {
         $config = Config::getInstance();
 
-        $dsn = 'mysql:host=' . $config->data['MYSQL_IPV4_ADDRESS'] . ';dbname=' . $config->data['MYSQL_DATABASE'];
+        $dsn = 'mysql:host=' . $config->data['MYSQL_HOST'] . ';dbname=' . $config->data['MYSQL_DATABASE'];
         $userName = $config->data['MYSQL_USER'];
         $password = $config->data['MYSQL_PASSWORD'];
 

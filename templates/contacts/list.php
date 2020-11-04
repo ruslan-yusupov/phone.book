@@ -14,7 +14,7 @@ use App\View;
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/src/dist/bundle.css">
+    <link rel="stylesheet" href="/dist/bundle.css">
     <title>Document</title>
     <style>
         input {
@@ -57,7 +57,7 @@ use App\View;
     </div>
 </body>
 
-<script src="/src/dist/bundle.js"></script>
+<script src="/dist/bundle.js"></script>
 
 <script>
     var addressBook = (function() {

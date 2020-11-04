@@ -25,16 +25,15 @@ class Router
     /**
      * @param string $method
      * @param string $rule
-     * @param string $controllerName
-     * @param string $action
+     * @param array $controller
      * @return $this
      */
-    public function add(string $method, string $rule, string $controllerName, string $action = 'Default'): self
+    public function add(string $method, string $rule, array $controller): self
     {
         $this->routes[$method][] = [
             'rule'           => '~^' . str_replace('/', '\/', $rule) . '$~',
-            'controllerName' => $controllerName,
-            'methodName'     => $action,
+            'controllerName' => $controller[0],
+            'methodName'     => $controller[1],
             'params'         => [],
 
         ];

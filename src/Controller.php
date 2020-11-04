@@ -19,12 +19,10 @@ abstract class Controller
         return true;
     }
 
-    public function action(string $name)
+    public function action(string $name, array $params = [])
     {
-        $action = 'action' . $name;
-
         if ($this->access()) {
-            $this->$action();
+            $this->$name($params);
         } else {
             header('Location: /auth');
             die;

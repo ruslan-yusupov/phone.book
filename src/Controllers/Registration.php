@@ -10,14 +10,14 @@ use App\View;
 class Registration extends Controller
 {
 
-    public function actionDefault()
+    public function index()
     {
 
-        echo $this->view->render(__DIR__ . '/../Templates/user/registration.php');
+        echo $this->view->render('/user/registration.php');
 
     }
 
-    public function actionRegister()
+    public function register()
     {
 
         $login           = trim($_POST['login']);
