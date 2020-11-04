@@ -20,10 +20,10 @@ class Registration extends Controller
     public function actionRegister()
     {
 
-        $login           = $_POST['login'];
-        $email           = $_POST['email'];
-        $password        = $_POST['password'];
-        $confirmPassword = $_POST['confirm_password'];
+        $login           = trim($_POST['login']);
+        $email           = trim($_POST['email']);
+        $password        = trim($_POST['password']);
+        $confirmPassword = trim($_POST['confirm_password']);
 
         switch (true) {
             case empty($login):

@@ -26,64 +26,35 @@ use App\View;
     </style>
 </head>
 <body>
-<div class="container">
-    <header>
-        <h1>Address Book</h1>
-    </header>
-    <table id='table1' class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Photo</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        <tfoot>
+    <div class="container">
+        <header>
+            <h1>Список контактов</h1>
+        </header>
+
+        <div class="row">
+            <div class="col"><?php echo $this->user->login; ?></div>
+            <div class="col"><?php echo $this->user->email; ?></div>
+            <div class="col"><a href="/logout">Выйти</a></div>
+        </div>
+
+        <div class="row">
             <?php
-            foreach ($this->contacts as $contact) { ?>
-                <th><img src="<?php echo $contact->picture; ?>" alt="<?php echo $contact->name; ?>">
-                    <?php echo $contact->picture; ?>
-                </th>
-                <th><?php echo $contact->name; ?></th>
-                <th><?php echo $contact->surname; ?></th>
-                <th><?php echo $contact->phone_number; ?></th>
-                <th><?php echo $contact->email; ?></th>
-                <td>
-                    <div class="text-center">
-                        <button id='add' class='btn btn-block' />Add</button>
-                    </div>
-                </td>
+            if (!empty($this->contacts)) { ?>
+                <div class="list-group">
+                    <?php
+                    foreach ($this->contacts as $contact) { ?>
+                        <a href="/list/<?php echo $contact->id; ?>"
+                           class="list-group-item list-group-item-action">
+                            <?php echo $contact->name . '&nbsp;' . $contact->surname; ?>
+                        </a>
+                    <?php } ?>
+                </div>
             <?php } ?>
-            <tr>
-                <td>
-                    <input id='photoPicture' class='form-control' type="file" />
-                </td>
-                <td>
-                    <input id='firstName' class='form-control' type="text" />
-                </td>
-                <td>
-                    <input id='lastName' class='form-control' type="text" />
-                </td>
-                <td>
-                    <input id='phone' class='form-control' type="text" />
-                </td>
-                <td>
-                    <input id='email' class='form-control' type="text" />
-                </td>
-                <td>
-                    <div class="text-center">
-                        <button id='add' class='btn btn-block' />Add</button>
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-</div>
+        </div>
+        <a href="/list/add" class="btn btn-lg btn-primary">
+            Добавить
+        </a>
+    </div>
 </body>
 
 <script src="/src/dist/bundle.js"></script>

@@ -2,12 +2,15 @@
 
 namespace App;
 
+use App\Models\Contact;
+use App\Models\User;
+
 /**
  * @package App
  *
  * @property array $data
- * @property array $contacts
- * @property array $user
+ * @property Contact $contacts
+ * @property User $user
  */
 
 class View

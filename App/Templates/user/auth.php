@@ -10,12 +10,9 @@
 </head>
 <body class="text-center">
 
-<form class="form-signin"
+<form class="form"
       method="post"
       action="/auth">
-    <img class="mb-4 logo"
-         src="/src/app/img/logo/logo.png"
-         alt="logo">
     <h1 class="h3 mb-3 font-weight-normal">
         Авторизация
     </h1>

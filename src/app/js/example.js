@@ -1,3 +1,7 @@
-export default function bar() {
-    ///example
+'use strict'
+
+export default function validation() {
+
+
+
 }

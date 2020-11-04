@@ -12,6 +12,7 @@ $router
     ->add('GET', '/list/(\d{1,10})', '\App\Controllers\Contacts', 'Detail')
     ->add('POST', '/list/(\d{1,10})/delete', '\App\Controllers\Contacts', 'Delete')
     ->add('POST', '/list/(\d{1,10})/edit', '\App\Controllers\Contacts', 'Edit')
+    ->add('GET', '/list/add', '\App\Controllers\Contacts', 'New')
     ->add('POST', '/list/add', '\App\Controllers\Contacts', 'Add')
 
     /* Registration */
@@ -21,7 +22,7 @@ $router
     /* Authorization */
     ->add('GET', '/auth', '\App\Controllers\Authorization')
     ->add('POST', '/auth', '\App\Controllers\Authorization', 'Auth')
-    ->add('POST', '/logout', '\App\Controllers\Authorization', 'Logout');
+    ->add('GET', '/logout', '\App\Controllers\Authorization', 'Logout');
 
 
 try {

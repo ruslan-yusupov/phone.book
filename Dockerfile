@@ -12,7 +12,7 @@ FROM nginx:latest as nginx
 ### MYSQL stage
 FROM mysql as mysql
 
-COPY docker/db/edu.sql /docker-entrypoint-initdb.d
+COPY docker/db/phone_book.sql /docker-entrypoint-initdb.d
 
 
 ### WORKSPACE stage

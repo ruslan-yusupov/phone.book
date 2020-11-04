@@ -38,6 +38,13 @@ class Contacts extends Controller
 
     }
 
+    public function actionNew()
+    {
+
+        echo $this->view->render(__DIR__ . '/../Templates/contacts/add.php');
+
+    }
+
     public function actionAdd()
     {
 
