@@ -9,11 +9,6 @@ use App\Models\User;
 class Contacts extends Controller
 {
 
-    protected function beforeAction()
-    {
-        //TODO action before action
-    }
-
     protected function access(): bool
     {
         return !empty(User::getCurrentUser());
