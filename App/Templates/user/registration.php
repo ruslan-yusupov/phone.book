@@ -1,11 +1,3 @@
-<?php
-
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../autoload.php';
-
-
-$routes = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,7 +12,7 @@ $routes = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
 
 <form class="form-signin"
       method="post"
-      action="/registration.php">
+      action="/user/registration.php">
     <img class="mb-4 logo"
          src="/src/app/img/logo/logo.png"
          alt="logo">

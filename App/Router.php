@@ -1,37 +1,81 @@
 <?php
 namespace App;
 
+use Exception;
+
+/**
+ * @package App
+ *
+ * @property string $method
+ * @property string $path
+ * @property array $params
+ * @property array $routes
+ */
 class Router
 {
-    protected array $rules;
-    protected string $uri;
+    protected string $method;
+    protected array $path;
+    protected array $params;
+    protected array $routes;
 
-    public function __construct(array $rules, string $uri)
+
+    /**
+     * Router constructor.
+     */
+    public function __construct()
     {
-        $this->rules = $rules;
-        $this->uri   = $this->getUri($uri);
-    }
-
-    protected function getUri($uri)
-    {
-        return trim($uri, '/');
-    }
-
-    public function map($request)
-    {
-
-        //TODO mapping
 
     }
 
-    public function run()
-    {
 
-        foreach ($this->rules as $rule => $controller) {
-            if ($rule === $this->uri) {
-                include $_SERVER['DOCUMENT_ROOT'] . $controller;
+    /**
+     * @param string $method
+     * @param string $rule
+     * @param string $controller
+     * @param string $action
+     * @return $this
+     */
+    public function add(string $method, string $rule, string $controller, string $action = 'Default'): self
+    {
+        $this->routes[$method][] = [
+            'rule'    => '~^' . str_replace('/', '\/', $rule) . '$~',
+            'controller' => $controller,
+            'method'  => 'action' . $action,
+            'params' => [],
+
+        ];
+
+        return $this;
+
+    }
+
+
+    /**
+     * @param $method
+     * @param $uri
+     * @return mixed|null
+     * @throws Exception
+     */
+    public function dispatch(string $method, string $uri)
+    {
+        $path = parse_url($uri, PHP_URL_PATH);
+
+        foreach ($this->routes[$method] as $route) {
+
+            if (preg_match($route['rule'], $path, $params)) {
+
+                if (!empty($params[1])) {
+                    $route['params']['id'] = $params[1];
+                }
+
+                return $route;
+
             }
+
         }
 
+        throw new Exception('No routes found', 404);
+
     }
+
 }
