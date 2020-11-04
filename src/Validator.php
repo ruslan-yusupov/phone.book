@@ -66,23 +66,18 @@ class Validator
 
 
     /**
-     * @param string $login
+     * @param $image
      * @return bool
      */
-    public static function checkImageSize(int $size): bool
+    public static function checkImage($image): bool
     {
 
-        //TODO
-        /*$hasLatinSymbols = '~[A-z]~';
-        $hasDigitsSymbols    = '~\d~';
-        $hasLimitIn16Symbols = '~^\S{3,16}$~';
-
-        switch (false) {
-            case preg_match($hasLatinSymbols, $login):
-            case preg_match($hasDigitsSymbols, $login):
-            case preg_match($hasLimitIn16Symbols, $login):
+        switch (true) {
+            case 0 !== $image['error']:
+            case 'image/jpeg' !== $image['type'] && 'image/png' !== $image['type']:
+            case 5242880 < $image['size']:
                 return false;
-        }*/
+        }
 
         return true;
 

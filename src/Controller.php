@@ -19,7 +19,7 @@ abstract class Controller
         return true;
     }
 
-    public function action(string $name, array $params = [])
+    public function action(string $name, array $params)
     {
         if ($this->access()) {
             $this->$name($params);

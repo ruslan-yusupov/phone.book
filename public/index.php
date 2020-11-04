@@ -49,7 +49,7 @@ try {
     switch ($exception->getCode()) {
         case 404:
             $error404 = new Error404;
-            $error404->index();
+            $error404->index($exception->getMessage());
             break;
     }
 

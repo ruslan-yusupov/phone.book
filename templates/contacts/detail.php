@@ -27,6 +27,7 @@ use App\View;
 </head>
 <body>
 <div class="container">
+
     <div class="row flex-row-reverse">
         <div class="card">
             <div class="card-body">
@@ -37,13 +38,11 @@ use App\View;
             </div>
         </div>
     </div>
-    <header>
-        <h1>Добавить контакт</h1>
-    </header>
-    <form action="/list/add" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="picture">Загрузить фото</label>
-            <input type="file" class="form-control-file" name="picture" id="picture">
+    <div>
+        <div class="card">
+            <img src="/uploads/<?php echo $this->contact->picture; ?>"
+                 class="card-img-top"
+                 alt="<?php echo $this->contact->name; ?>">
         </div>
         <div class="form-group">
             <label for="name">Имя</label>
@@ -51,7 +50,8 @@ use App\View;
                    class="form-control"
                    id="name"
                    name="name"
-                   value=""
+                   readonly
+                   value="<?php echo $this->contact->name; ?>"
                    placeholder="Имя">
         </div>
         <div class="form-group">
@@ -60,7 +60,8 @@ use App\View;
                    class="form-control"
                    id="surname"
                    name="surname"
-                   value=""
+                   readonly
+                   value="<?php echo $this->contact->surname; ?>"
                    placeholder="Фамилия">
         </div>
         <div class="form-group">
@@ -69,7 +70,8 @@ use App\View;
                    class="form-control"
                    id="phone_number"
                    name="phone_number"
-                   value=""
+                   readonly
+                   value="<?php echo $this->contact->phone_number; ?>"
                    placeholder="Телефон">
         </div>
         <div class="form-group">
@@ -78,11 +80,18 @@ use App\View;
                    class="form-control"
                    id="email"
                    name="email"
-                   value=""
+                   readonly
+                   value="<?php echo $this->contact->email; ?>"
                    placeholder="Email">
         </div>
-        <button type="submit" class="btn btn-primary">Добавить</button>
-
+    </div>
+    <form action="/list/<?php echo $this->contact->id; ?>/delete" method="post">
+        <a href="/list" class="btn btn-link">Вернуться в список</a>
+        <button type="submit" class="btn btn-secondary">Удалить</button>
     </form>
+
+</body>
+
+<script src="/dist/bundle.js"></script>
 
 </html>

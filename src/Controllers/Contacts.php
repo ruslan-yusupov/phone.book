@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controller;
 use App\Models\Contact;
 use App\Models\User;
+use App\Models\Validator;
+use Exception;
 
 class Contacts extends Controller
 {
@@ -23,19 +25,32 @@ class Contacts extends Controller
 
     }
 
-    public function detail()
+    /**
+     * @param array $params
+     * @throws Exception
+     */
+    public function detail(array $params)
     {
 
-        $id = 1;
+        if (empty($params['id'])) {
+            throw new Exception('ID is missed', 404);
+        }
 
-        $this->view->contacts = Contact::findById($id);
-        echo $this->view->render('/contacts/list.php');
+        $this->view->user     = User::getCurrentUser();
+        $this->view->contact = Contact::findById($params['id']);
+
+        if (empty($this->view->contact)) {
+            throw new Exception('Contact not found', 404);
+        }
+
+        echo $this->view->render('/contacts/detail.php');
 
     }
 
     public function new()
     {
 
+        $this->view->user = User::getCurrentUser();
         echo $this->view->render('/contacts/add.php');
 
     }
@@ -48,7 +63,7 @@ class Contacts extends Controller
             case empty($_POST['surname']):
             case empty($_POST['phone_number']):
             case empty($_POST['email']):
-            case empty($_POST['picture']):
+            case empty($_FILES['picture']) && Validator::checkImage($_FILES['picture']):
                 echo $this->view->render('/contacts/add.php');
                 die;
         }
@@ -59,7 +74,12 @@ class Contacts extends Controller
         $contact->surname      = strval(htmlspecialchars($_POST['surname']));
         $contact->phone_number = strval(htmlspecialchars($_POST['phone_number']));
         $contact->email        = strval(htmlspecialchars($_POST['email']));
-        $contact->picture      = $_POST['picture'];
+        $contact->picture      = $_FILES['picture']['name'];
+
+        move_uploaded_file(
+            $_FILES['picture']['tmp_name'],
+            realpath(__DIR__ . '/../../public/uploads/') . '/' . $contact->picture
+        );
 
         $contact->save();
 
@@ -68,50 +88,36 @@ class Contacts extends Controller
 
     }
 
-    public function update()
+    /**
+     * @param array $params
+     * @throws Exception
+     */
+    public function delete(array $params)
     {
 
-        if (empty($_GET['id'])) {
-
-            header('Location: /list');
-            die;
-
+        if (empty($params['id'])) {
+            throw new Exception('ID is missed', 404);
         }
 
-        $contactId = intval(htmlspecialchars($_GET['id']));
+        /**
+         * @var Contact $contact
+         */
+        $contact = Contact::findById($params['id']);
 
-        $contact = Contact::findById($contactId);
+        $contactImageFileSrc = realpath(__DIR__ . '/../../public/uploads/') . '/' . $contact->picture;
 
-        if (false === $contact) {
-            $contact = new Contact;
+        if (true === file_exists($contactImageFileSrc)) {
+            unlink($contactImageFileSrc);
         }
 
-        foreach (get_object_vars($contact) as $field => $value) {
-            if (!empty($_POST[$field])) {
-                $contact->$field = htmlspecialchars($_POST[$field]);
-            }
+        if (empty($contact)) {
+            throw new Exception('Contact not found', 404);
         }
 
-        $contact->save();
-
-        echo $this->view->render('/contacts/update.php');
-
-    }
-
-    public function delete()
-    {
-
-        if (empty($_GET['id'])) {
-
-            header('Location: /list');
-            die;
-
-        }
-
-        $contactId = intval(htmlspecialchars($_GET['id']));
-
-        $contact = Contact::findById($contactId);
         $contact->delete();
+
+        header('Location: /list');
+        die;
 
     }
 

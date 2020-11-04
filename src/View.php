@@ -10,7 +10,9 @@ use App\Models\User;
  *
  * @property array $data
  * @property Contact $contacts
+ * @property Contact $contact
  * @property User $user
+ * @property string $message
  */
 
 class View

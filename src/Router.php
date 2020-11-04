@@ -67,7 +67,7 @@ class Router
 
         }
 
-        throw new Exception('No routes found', 404);
+        throw new Exception('Page not found', 404);
 
     }
 
