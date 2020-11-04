@@ -6,10 +6,9 @@ use App\View;
  * @var View $this
  */
 
-
 ?>
-
-<html>
+<!doctype html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -30,7 +29,6 @@ use App\View;
 <div class="container">
     <header>
         <h1>Address Book</h1>
-        <hr />
     </header>
     <table id='table1' class="table table-bordered">
         <thead>

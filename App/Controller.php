@@ -14,6 +14,30 @@ abstract class Controller
 
     }
 
+    protected function beforeAction()
+    {
+
+    }
+
+    protected function access(): bool
+    {
+        return true;
+    }
+
+    public function action(string $name)
+    {
+        $this->beforeAction();
+        $action = 'action' . $name;
+
+        if ($this->access()) {
+            $this->$action();
+        } else {
+            header('Location: /auth');
+            die;
+        }
+
+    }
+
 
 
 }

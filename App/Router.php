@@ -6,18 +6,12 @@ use Exception;
 /**
  * @package App
  *
- * @property string $method
- * @property string $path
- * @property array $params
  * @property array $routes
  */
 class Router
 {
-    protected string $method;
-    protected array $path;
-    protected array $params;
-    protected array $routes;
 
+    protected array $routes;
 
     /**
      * Router constructor.
@@ -31,17 +25,17 @@ class Router
     /**
      * @param string $method
      * @param string $rule
-     * @param string $controller
+     * @param string $controllerName
      * @param string $action
      * @return $this
      */
-    public function add(string $method, string $rule, string $controller, string $action = 'Default'): self
+    public function add(string $method, string $rule, string $controllerName, string $action = 'Default'): self
     {
         $this->routes[$method][] = [
-            'rule'    => '~^' . str_replace('/', '\/', $rule) . '$~',
-            'controller' => $controller,
-            'method'  => 'action' . $action,
-            'params' => [],
+            'rule'           => '~^' . str_replace('/', '\/', $rule) . '$~',
+            'controllerName' => $controllerName,
+            'methodName'     => $action,
+            'params'         => [],
 
         ];
 

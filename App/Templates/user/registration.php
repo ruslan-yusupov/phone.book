@@ -6,13 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/src/dist/bundle.css">
-    <title>Document</title>
+    <title>Регистрация</title>
 </head>
 <body class="text-center">
 
 <form class="form-signin"
       method="post"
-      action="/user/registration.php">
+      action="/registration">
     <img class="mb-4 logo"
          src="/src/app/img/logo/logo.png"
          alt="logo">
@@ -65,7 +65,7 @@
             type="submit">
         Зарегистрироваться
     </button>
-    <a href="/" class="btn btn-lg btn-secondary">
+    <a href="/auth" class="btn btn-lg btn-secondary">
         Войти
     </a>
     <p class="mt-5 mb-3 text-muted">

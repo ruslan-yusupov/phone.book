@@ -5,8 +5,9 @@ namespace App;
 /**
  * @package App
  *
- * @property $data
- * @property $contacts
+ * @property array $data
+ * @property array $contacts
+ * @property array $user
  */
 
 class View

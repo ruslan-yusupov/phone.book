@@ -4,15 +4,26 @@ namespace App\Controllers;
 
 use App\Controller;
 use App\Models\Contact;
-use App\View;
+use App\Models\User;
 
 class Contacts extends Controller
 {
 
-    public function actionList()
+    protected function beforeAction()
     {
+        //TODO action before action
+    }
 
+    protected function access(): bool
+    {
+        return !empty(User::getCurrentUser());
+    }
+
+    public function actionDefault()
+    {
         $this->view->contacts = Contact::findAll();
+        $this->view->user     = User::getCurrentUser();
+
         echo $this->view->render(__DIR__ . '/../Templates/contacts/list.php');
 
     }
@@ -50,7 +61,7 @@ class Contacts extends Controller
 
         $contact->save();
 
-        header('Location: /contacts/index.php');
+        header('Location: /list');
         die;
 
     }
