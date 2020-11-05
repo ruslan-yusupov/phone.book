@@ -34,7 +34,6 @@ try {
 
     $route = $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
-    //TODO is_callable
     /**
      * @var App\Controller $controller
      */
