@@ -15,8 +15,7 @@ abstract class Model
     public static function findAll(): array
     {
 
-        $db = new Db;
-
+        $db  = new Db;
         $sql = 'SELECT * FROM ' . static::$table;
 
         return $db->query($sql, [], static::class);
@@ -30,10 +29,8 @@ abstract class Model
     public static function findById(int $id)
     {
 
-        $db = new Db;
-
-        $sql = 'SELECT * FROM ' . static::$table . ' WHERE id = :id';
-
+        $db     = new Db;
+        $sql    = 'SELECT * FROM ' . static::$table . ' WHERE id = :id';
         $result = $db->query($sql, [':id' => $id], static::class);
 
         return !empty($result) ? reset($result) : false;
@@ -46,12 +43,11 @@ abstract class Model
     public function insert(): void
     {
 
-        $db = new Db;
-
-        $props = get_object_vars($this);
+        $db     = new Db;
+        $props  = get_object_vars($this);
         $fields = [];
-        $binds = [];
-        $data = [];
+        $binds  = [];
+        $data   = [];
 
         foreach ($props as $name => $value) {
 
@@ -79,11 +75,10 @@ abstract class Model
     public function update(): void
     {
 
-        $db = new Db;
-
-        $props = get_object_vars($this);
+        $db     = new Db;
+        $props  = get_object_vars($this);
         $fields = [];
-        $data = [];
+        $data   = [];
 
         foreach ($props as $name => $value) {
 
@@ -110,7 +105,7 @@ abstract class Model
     public function delete(): void
     {
 
-        $db = new Db;
+        $db  = new Db;
         $sql = 'DELETE FROM ' . static::$table . ' WHERE id=:id';
 
         $db->execute($sql, [':id' => $this->id]);

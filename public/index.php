@@ -2,7 +2,7 @@
 
 use App\Controllers\Authorization;
 use App\Controllers\Contacts;
-use App\Controllers\Error404;
+use App\Controllers\Error;
 use App\Controllers\Index;
 use App\Controllers\Registration;
 use App\Router;
@@ -48,8 +48,8 @@ try {
 
     switch ($exception->getCode()) {
         case 404:
-            $error404 = new Error404;
-            $error404->index($exception->getMessage());
+            $errorPage = new Error;
+            $errorPage->index($exception->getMessage());
             break;
     }
 

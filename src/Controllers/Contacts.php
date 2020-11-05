@@ -11,15 +11,24 @@ use Exception;
 class Contacts extends Controller
 {
 
+    protected $user;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->user = User::getCurrentUser();
+
+    }
+
     protected function access(): bool
     {
-        return !empty(User::getCurrentUser());
+        return !empty($this->user);
     }
 
     public function index()
     {
+        $this->view->user     = $this->user;
         $this->view->contacts = Contact::findAll();
-        $this->view->user     = User::getCurrentUser();
 
         echo $this->view->render('/contacts/list.php');
 
@@ -50,7 +59,7 @@ class Contacts extends Controller
     public function new()
     {
 
-        $this->view->user = User::getCurrentUser();
+        $this->view->user = $this->user;
         echo $this->view->render('/contacts/add.php');
 
     }
@@ -75,6 +84,7 @@ class Contacts extends Controller
         $contact->phone_number = strval(htmlspecialchars($_POST['phone_number']));
         $contact->email        = strval(htmlspecialchars($_POST['email']));
         $contact->picture      = $_FILES['picture']['name'];
+        $contact->user_id      = $this->user->id;
 
         move_uploaded_file(
             $_FILES['picture']['tmp_name'],
