@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Controller;
 use App\Models\Contact;
 use App\Models\User;
-use App\Models\Validator;
+use App\Validator;
 use Exception;
 
 class Contacts extends Controller
@@ -13,17 +13,25 @@ class Contacts extends Controller
 
     protected $user;
 
+
+    /**
+     * Contacts constructor.
+     */
     public function __construct()
     {
         parent::__construct();
         $this->user = User::getCurrentUser();
-
     }
 
+
+    /**
+     * @return bool
+     */
     protected function access(): bool
     {
         return !empty($this->user);
     }
+
 
     public function index()
     {
@@ -34,18 +42,18 @@ class Contacts extends Controller
 
     }
 
+
     /**
      * @param array $params
      * @throws Exception
      */
     public function detail(array $params)
     {
-
         if (empty($params['id'])) {
             throw new Exception('ID is missed', 404);
         }
 
-        $this->view->user     = User::getCurrentUser();
+        $this->view->user    = User::getCurrentUser();
         $this->view->contact = Contact::findById($params['id']);
 
         if (empty($this->view->contact)) {
@@ -53,30 +61,42 @@ class Contacts extends Controller
         }
 
         echo $this->view->render('/contacts/detail.php');
-
     }
 
-    public function new()
-    {
-
-        $this->view->user = $this->user;
-        echo $this->view->render('/contacts/add.php');
-
-    }
 
     public function add()
     {
+        $alerts = [];
 
-        switch (true) {
-            case empty($_POST['name']):
-            case empty($_POST['surname']):
-            case empty($_POST['phone_number']):
-            case empty($_POST['email']):
-            case empty($_FILES['picture']) && Validator::checkImage($_FILES['picture']):
-                echo $this->view->render('/contacts/add.php');
-                die;
+        //Check fields
+        switch (false) {
+            case Validator::checkInput($_POST['name']):
+                $alerts['name'] = 'Поле "Имя" не заполнено';
+            case Validator::checkInput($_POST['surname']):
+                $alerts['surname'] = 'Поле "Фамилия" не заполнено';
+            case Validator::checkEmail($_POST['email']):
+                $alerts['email'] = 'Некорректно введен Email';
+            case Validator::checkInput($_POST['phone_number']):
+                $alerts['phone_number'] = 'Поле "Телефон" не заполнено';
+            case Validator::checkImage($_FILES['picture']):
+                $alerts['picture'] = 'Изображение должно быть не больше 5МБ, jpeg или png';
         }
 
+
+        if (!empty($alerts)) {
+
+            $this->view->alerts = $alerts;
+
+            $response = [
+                'status' => 'error',
+                'html'   => $this->view->render('/contacts/form.php')
+            ];
+
+            echo json_encode($response);
+            die;
+        }
+
+        //Create a contact
         $contact = new Contact;
 
         $contact->name         = strval(htmlspecialchars($_POST['name']));
@@ -86,17 +106,41 @@ class Contacts extends Controller
         $contact->picture      = $_FILES['picture']['name'];
         $contact->user_id      = $this->user->id;
 
-        move_uploaded_file(
+        //Check if the file is uploaded
+        $isFileUploaded = move_uploaded_file(
             $_FILES['picture']['tmp_name'],
             realpath(__DIR__ . '/../../public/uploads/') . '/' . $contact->picture
         );
 
+        if (false === $isFileUploaded) {
+            $alerts[] = 'Произошла ошибка с загрузкой файла';
+
+            $this->view->alerts = $alerts;
+
+            $response = [
+                'status' => 'error',
+                'html'   => $this->view->render('/contacts/form.php')
+            ];
+
+            echo json_encode($response);
+            die;
+        }
+
+        //Save a contact
         $contact->save();
 
-        header('Location: /list');
-        die;
+        $this->view->count   = Contact::getCount();
+        $this->view->contact = $contact;
 
+        $response = [
+            'status' => 'success',
+            'html'   => $this->view->render('/contacts/add.php')
+        ];
+
+        echo json_encode($response);
+        die;
     }
+
 
     /**
      * @param array $params
@@ -128,7 +172,6 @@ class Contacts extends Controller
 
         header('Location: /list');
         die;
-
     }
 
 }

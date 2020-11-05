@@ -29,8 +29,9 @@ CREATE TABLE `contacts` (
   `phone_number` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL,
   `picture` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +40,7 @@ CREATE TABLE `contacts` (
 
 LOCK TABLES `contacts` WRITE;
 /*!40000 ALTER TABLE `contacts` DISABLE KEYS */;
-INSERT INTO `contacts` VALUES (2,'Иван','Васильев','89618150110','ivan@mail.ru','ivan.jpg');
+INSERT INTO `contacts` VALUES (12,'Руслан','Юсупов','89068512201','yrm.10111990@gmail.com','instagram.png',1),(25,'Руслан','Юсупов','123123123123','yrm.10111990@gmail.com','instagram.png',12);
 /*!40000 ALTER TABLE `contacts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +57,7 @@ CREATE TABLE `sessions` (
   `hash` varchar(1024) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_agent` varchar(1024) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,6 +66,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` VALUES (46,12,'9332b0e25db2ee08522feac2caff43502b204817a1ab45e7d3b3cc22d7e7e98b','238377059dd2fac69ba9cfbca5f32a97c735f387bfacafd0f454b29b7e6f9f00');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +85,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_uindex` (`email`),
   UNIQUE KEY `users_login_uindex` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +94,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'test','test@test.com','$2y$10$FsciKZLBc2.EMN26b9.feOeYpqb7mTOCNsYFf84DjtAzPUt/iQJSG'),(2,'tester','tester@test.com','$2y$10$f8V18wdNFTIqiLephT8UJ.XW9uYszjknU/vz0E8YWKvQueQ8Ryzba'),(3,'super','super@email.com','$2y$10$iRp2ZQdfRP1mqUkM9uw1vOjQnbMRdE5seaXTTqMdOdUvqrZG.X5dq'),(4,'user','user@mail.ru','$2y$10$HbLpv1fKeVy4vpRuTNBodOi9TqDDNRJ5zAF.g6ViErQeVnWDRYI9S'),(5,'tester1','tester1@test.com','$2y$10$baY6OT4XwplXnMv.UC3R3ek6Mo3sUdzrUtP9ZYNCh.NbzI0loetZi'),(6,'tester2','tester2@test.com','$2y$10$5iHyrpsVBwaadlbgbDrqcez2KKyVJEsU3tGHXUJgR.5ur0C/kA8xW'),(7,'super_tester','supertest@mail.com','$2y$10$nqzolSV/YDS64gh91mGlIOX1sjakvKGML54HvRyLoafjkD0n2qwIy');
+INSERT INTO `users` VALUES (1,'test','test@test.com','$2y$10$FsciKZLBc2.EMN26b9.feOeYpqb7mTOCNsYFf84DjtAzPUt/iQJSG'),(2,'tester','tester@test.com','$2y$10$f8V18wdNFTIqiLephT8UJ.XW9uYszjknU/vz0E8YWKvQueQ8Ryzba'),(3,'super','super@email.com','$2y$10$iRp2ZQdfRP1mqUkM9uw1vOjQnbMRdE5seaXTTqMdOdUvqrZG.X5dq'),(4,'user','user@mail.ru','$2y$10$HbLpv1fKeVy4vpRuTNBodOi9TqDDNRJ5zAF.g6ViErQeVnWDRYI9S'),(5,'tester1','tester1@test.com','$2y$10$baY6OT4XwplXnMv.UC3R3ek6Mo3sUdzrUtP9ZYNCh.NbzI0loetZi'),(6,'tester2','tester2@test.com','$2y$10$5iHyrpsVBwaadlbgbDrqcez2KKyVJEsU3tGHXUJgR.5ur0C/kA8xW'),(7,'super_tester','supertest@mail.com','$2y$10$nqzolSV/YDS64gh91mGlIOX1sjakvKGML54HvRyLoafjkD0n2qwIy'),(8,'tester3','tester3@test.com','$2y$10$V0oj3uqY8wt/mCKkhvJoGeFl5aBsFGBwwxXa5TIwFhAjqbWB6u.hO'),(9,'yusupov-r-m','yrm.10111990@gmail.com','$2y$10$/HoqWXutzitQ10OiFfyd0.FnGSY6juJTJMjIdBDMvvGCQmIJjcmE6'),(10,'tester123','wertwertwert@retrwert.ru','$2y$10$K2lf5Sp6vyWXjxGgySaJsuSUzTG38ezIPwwW9g4OhmdY5idHGkdAe'),(12,'tester12345','test12345@test.com','$2y$10$9QxO7S1kTU/TSTgVhXwPkegKKWOM/5/6ApfqMJEgAw382rJzsX4RO');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -105,4 +107,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-04 14:08:48
+-- Dump completed on 2020-11-05 21:06:18

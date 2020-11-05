@@ -13,6 +13,8 @@ use App\Models\User;
  * @property Contact $contact
  * @property User $user
  * @property string $message
+ * @property array $alerts
+ * @property int $count
  */
 
 class View
@@ -20,21 +22,41 @@ class View
 
     protected array $data = [];
 
+
+    /**
+     * @param $name
+     * @param $value
+     */
     public function __set($name, $value)
     {
         $this->data[$name] = $value;
     }
 
+
+    /**
+     * @param $name
+     * @return mixed|null
+     */
     public function __get($name)
     {
         return $this->data[$name] ?? null;
     }
 
+
+    /**
+     * @param $name
+     * @return bool
+     */
     public function __isset($name): bool
     {
         return isset($this->data[$name]);
     }
 
+
+    /**
+     * @param $template
+     * @return false|string
+     */
     public function render($template)
     {
         $templatePath = __DIR__ . '/../templates' . $template;

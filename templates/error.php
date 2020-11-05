@@ -8,8 +8,7 @@ use App\View;
 
 $message = $this->message ?? 'Page Not Found';
 
-?>
-<!doctype html>
+?><!doctype html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">

@@ -1,16 +1,15 @@
-///import files
+//import files
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/app.css';
 
-///global variables
+//global variables
 import jQuery from 'jquery';
 window.$ = jQuery;
 
-///import modules
-import bar from "./js/example";
+//import modules
+import Form from "./js/form";
 
-///launch modules
-bar();
-
-///export modules
+//launch modules
+let form = new Form();
+form.initHandlers();

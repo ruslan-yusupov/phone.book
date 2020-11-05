@@ -2,11 +2,18 @@
 
 namespace App;
 
+/**
+ * @package App
+ *
+ * @property array $data
+ * @property $instance
+ */
 class Config
 {
 
     public array $data;
     protected static $instance;
+
 
     /**
      * Config constructor.
@@ -23,7 +30,6 @@ class Config
         });
 
         $this->data = $configData;
-
     }
 
 
@@ -32,17 +38,13 @@ class Config
      */
     public static function getInstance(): self
     {
-
         if (null !== static::$instance) {
-
             return static::$instance;
-
         }
 
         static::$instance = new static;
 
         return static::$instance;
-
     }
 
 }

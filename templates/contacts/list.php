@@ -6,8 +6,7 @@ use App\View;
  * @var View $this
  */
 
-?>
-<!doctype html>
+?><!doctype html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -15,20 +14,12 @@ use App\View;
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/dist/bundle.css">
-    <title>Document</title>
-    <style>
-        input {
-            background:rgba(0,0,0,0);
-            border:none;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <title>Список контактов</title>
 </head>
 <body>
     <div class="container">
 
-        <div class="row flex-row-reverse">
+        <div class="row flex-row-reverse mb-5">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Пользователь</h5>
@@ -40,11 +31,10 @@ use App\View;
         </div>
 
         <div class="row">
-            <h1>Список контактов</h1>
-            <?php
-            if (!empty($this->contacts)) { ?>
-                <table class="table">
-                    <thead class="thead-light">
+            <h1 class="mb-3">Список контактов</h1>
+
+            <table class="table">
+                <thead class="thead-light">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Имя</th>
@@ -53,9 +43,11 @@ use App\View;
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
-                    </thead>
-                    <tbody>
-                        <?php
+                </thead>
+
+                <tbody data-contacts-table>
+                    <?php
+                    if (!empty($this->contacts)) {
                         foreach ($this->contacts as $number => $contact) { ?>
                             <tr>
                                 <th scope="row">
@@ -75,21 +67,24 @@ use App\View;
                                     </form>
                                 </td>
                             </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            <?php } else {?>
-                <div class="col-12 text-left mb-3 mt-3">
-                   Список пуст
-                </div>
-            <?php }?>
+                        <?php }
+                    } ?>
+                </tbody>
+            </table>
         </div>
-        <a href="/list/add" class="btn btn-lg btn-primary">
-            Добавить
-        </a>
+
+        <?php if (empty($this->contacts)) {?>
+            <div class="row text-left mb-3 mt-3" data-empty-block>
+                Список контактов пуст
+            </div>
+        <?php } ?>
+
+        <?php require_once __DIR__ . '/form.php'; ?>
     </div>
+
+    <script src="/dist/bundle.js"></script>
+
 </body>
 
-<script src="/dist/bundle.js"></script>
 
 </html>

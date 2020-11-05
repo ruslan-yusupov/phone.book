@@ -6,8 +6,7 @@ use App\View;
  * @var View $this
  */
 
-?>
-<!doctype html>
+?><!doctype html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -15,15 +14,7 @@ use App\View;
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/dist/bundle.css">
-    <title>Document</title>
-    <style>
-        input {
-            background:rgba(0,0,0,0);
-            border:none;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <title><?php echo $this->contact->name . ' ' .  $this->contact->surname; ?></title>
 </head>
 <body>
 <div class="container">
@@ -38,6 +29,7 @@ use App\View;
             </div>
         </div>
     </div>
+
     <div>
         <div class="card">
             <img src="/uploads/<?php echo $this->contact->picture; ?>"
@@ -85,13 +77,15 @@ use App\View;
                    placeholder="Email">
         </div>
     </div>
+
     <form action="/list/<?php echo $this->contact->id; ?>/delete" method="post">
         <a href="/list" class="btn btn-link">Вернуться в список</a>
         <button type="submit" class="btn btn-secondary">Удалить</button>
     </form>
 
+    <script src="/dist/bundle.js"></script>
+
 </body>
 
-<script src="/dist/bundle.js"></script>
 
 </html>

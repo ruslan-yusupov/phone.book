@@ -7,7 +7,6 @@ use App\Controllers\Index;
 use App\Controllers\Registration;
 use App\Router;
 
-require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../autoload.php';
 
 
@@ -19,8 +18,6 @@ $router
     ->add('GET', '/list', [Contacts::class, 'index'])
     ->add('GET', '/list/(\d{1,10})', [Contacts::class, 'detail'])
     ->add('POST', '/list/(\d{1,10})/delete', [Contacts::class, 'delete'])
-    ->add('POST', '/list/(\d{1,10})/edit', [Contacts::class, 'edit'])
-    ->add('GET', '/list/add', [Contacts::class, 'new'])
     ->add('POST', '/list/add', [Contacts::class, 'add'])
 
     /* Registration */

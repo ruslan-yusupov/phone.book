@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Models;
 
 use App\Db;
@@ -12,10 +11,10 @@ class User extends Model
     const COOKIE_SESS_NAME = 'APPSESSID';
 
     public static string $table = 'users';
-
     public string $login;
     public string $email;
     public $password;
+
 
     /**
      * @param string $email
@@ -38,7 +37,6 @@ class User extends Model
         }
 
         return false;
-
     }
 
 
@@ -62,7 +60,6 @@ class User extends Model
 
         //Get user
         return self::findById($userId);
-
     }
 
 
@@ -85,7 +82,6 @@ class User extends Model
         }
 
         return $result;
-
     }
 
 
@@ -106,7 +102,34 @@ class User extends Model
         $user->save();
 
         return $user->id;
+    }
 
+
+    /**
+     * @param string $login
+     * @return object|bool
+     */
+    public static function findByLogin(string $login)
+    {
+        $db     = new Db;
+        $sql    = 'SELECT * FROM ' . static::$table . ' WHERE login = :login';
+        $result = $db->query($sql, [':login' => $login], static::class);
+
+        return !empty($result) ? reset($result) : false;
+    }
+
+
+    /**
+     * @param string $email
+     * @return object|bool
+     */
+    public static function findByEmail(string $email)
+    {
+        $db     = new Db;
+        $sql    = 'SELECT * FROM ' . static::$table . ' WHERE email = :email';
+        $result = $db->query($sql, [':email' => $email], static::class);
+
+        return !empty($result) ? reset($result) : false;
     }
 
 }

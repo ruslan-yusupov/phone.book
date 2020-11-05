@@ -41,7 +41,7 @@ RUN apt-get update \
     && npm install
 
 COPY /docker/php/php.ini /usr/local/etc/php/conf.d/
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+#COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN mkdir -p /home/www-data/phone.book
 
@@ -52,7 +52,7 @@ RUN deluser www-data \
     && addgroup --gid $USER_UID www-data \
     && adduser --uid $USER_UID --gid $USER_UID --home /home/www-data --disabled-password --gecos "First Last,RoomNumber,WorkPhone,HomePhone" www-data
 
-COPY composer.* ./
+#COPY composer.* ./
 
 RUN chown -R www-data:www-data ../
 

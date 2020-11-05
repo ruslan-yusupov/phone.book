@@ -4,10 +4,16 @@ namespace App;
 
 use PDO;
 
+/**
+ * @package App
+ *
+ * @property PDO $dbh
+ */
 class Db
 {
 
     protected PDO $dbh;
+
 
     /**
      * Db constructor.
@@ -16,12 +22,13 @@ class Db
     {
         $config = Config::getInstance();
 
-        $dsn = 'mysql:host=' . $config->data['MYSQL_HOST'] . ';dbname=' . $config->data['MYSQL_DATABASE'];
+        $dsn      = 'mysql:host=' . $config->data['MYSQL_HOST'] . ';dbname=' . $config->data['MYSQL_DATABASE'];
         $userName = $config->data['MYSQL_USER'];
         $password = $config->data['MYSQL_PASSWORD'];
 
         $this->dbh = new PDO($dsn, $userName, $password);
     }
+
 
     /**
      * @param string $sql
@@ -43,6 +50,7 @@ class Db
         return $sth->FetchAll();
     }
 
+
     /**
      * @param string $query
      * @param array $params
@@ -54,6 +62,7 @@ class Db
 
         return $sth->execute($params);
     }
+
 
     /**
      * @return string

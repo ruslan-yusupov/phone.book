@@ -13,14 +13,6 @@ class Router
 
     protected array $routes;
 
-    /**
-     * Router constructor.
-     */
-    public function __construct()
-    {
-
-    }
-
 
     /**
      * @param string $method
@@ -49,7 +41,7 @@ class Router
      * @return mixed|null
      * @throws Exception
      */
-    public function dispatch(string $method, string $uri)
+    public function dispatch(string $method, string $uri): array
     {
         $path = parse_url($uri, PHP_URL_PATH);
 

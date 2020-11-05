@@ -5,16 +5,14 @@ namespace App\Controllers;
 use App\Controller;
 use App\Models\Session;
 use App\Models\User;
+use App\Validator;
 
 class Authorization extends Controller
 {
 
-
     public function index()
     {
-
         echo $this->view->render('/user/auth.php');
-
     }
 
 
@@ -22,12 +20,20 @@ class Authorization extends Controller
     {
         $email    = strval(htmlspecialchars($_POST['email']));
         $password = strval(htmlspecialchars($_POST['password']));
+        $alerts   = [];
 
-        switch (true) {
-            case empty($email):
-            case empty($password):
-                header('Location: /auth');
-                die;
+        switch (false) {
+            case Validator::checkEmail($email):
+            case Validator::checkPassword($password):
+                $alerts[] = 'Email и пароль введены неверно';
+                $this->view->alerts = $alerts;
+                break;
+        }
+
+        if (!empty($alerts)) {
+            $this->view->alerts = $alerts;
+            echo $this->view->render('/user/auth.php');
+            die;
         }
 
         $userId = User::authenticate($email, $password);
